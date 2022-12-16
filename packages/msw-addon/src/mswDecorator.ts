@@ -21,7 +21,7 @@ export interface DecoratorContext extends StoryContext {
 const IS_BROWSER = !isNodeProcess()
 let api: SetupApi
 
-export function initialize(options?: InitializeOptions): SetupApi {
+export function initialize(options?: (InitializeOptions & {isNative: boolean})): SetupApi {
   if (IS_BROWSER) {
     const { setupWorker } = require('msw')
     const worker = setupWorker()
@@ -44,8 +44,8 @@ export function initialize(options?: InitializeOptions): SetupApi {
         ? __non_webpack_require__
         : require
       : undefined;
-     
-    const { setupServer } = nodeRequire('msw/node')
+
+    const { setupServer } = (options?.isNative) ? nodeRequire('msw/native') : nodeRequire('msw/node')
     const server = setupServer()
     server.listen(options)
     api = server
