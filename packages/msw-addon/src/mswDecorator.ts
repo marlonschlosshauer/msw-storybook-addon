@@ -21,7 +21,7 @@ export interface DecoratorContext extends StoryContext {
 const IS_BROWSER = !isNodeProcess()
 let api: SetupApi
 
-export function initialize(options?: (InitializeOptions & {isNative: boolean})): SetupApi {
+export function initialize(options?: (InitializeOptions & {isNative?: boolean})): SetupApi {
   if (IS_BROWSER) {
     const { setupWorker } = require('msw')
     const worker = setupWorker()
