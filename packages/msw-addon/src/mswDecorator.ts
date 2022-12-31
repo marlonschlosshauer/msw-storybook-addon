@@ -45,7 +45,7 @@ export function initialize(options?: (InitializeOptions & {isNative?: boolean}))
         : require
       : undefined;
 
-    const { setupServer } = (options?.isNative) ? nodeRequire('msw/native') : nodeRequire('msw/node')
+		const { setupServer } = (options?.isNative) ? require('msw/native') : nodeRequire('msw/node')
     const server = setupServer()
     server.listen(options)
     api = server
